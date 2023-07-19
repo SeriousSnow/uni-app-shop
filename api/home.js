@@ -10,6 +10,9 @@ export function swiperListAPI() {
 	})
 }
 
+/* 
+	分类请求
+ */
 export function navListAPI() {
 	return http({
 		url: '/api/public/v1/home/catitems',
@@ -17,6 +20,9 @@ export function navListAPI() {
 	})
 }
 
+/* 
+	楼层请求
+ */
 export function floorListAPI() {
 	return http({
 		url: '/api/public/v1/home/floordata',
