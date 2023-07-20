@@ -18,7 +18,7 @@
 		// 获取当前系统的信息
 		const sysInfo = uni.getSystemInfoSync()
 		// 为 wh 窗口可用高度动态赋值
-		wh.value = sysInfo.windowHeight
+		wh.value = sysInfo.windowHeight - 50
 
 		cate.getCateList()
 	})
@@ -27,16 +27,23 @@
 		active.value = index
 		scrollTop.value = scrollTop.value === 0 ? 1 : 0
 	}
-	
+
 	const gotoGoodsList = (item3) => {
 		uni.navigateTo({
-		    url: '/subpkg/goods_list/goods_list?cid=' + item3.cat_id
-		  })
+			url: '/subpkg/goods_list/goods_list?cid=' + item3.cat_id
+		})
+	}
+
+	function gotoSearch() {
+		uni.navigateTo({
+			url: '/subpkg/search/search'
+		})
 	}
 </script>
 
 
 <template>
+	<my-search @click="gotoSearch"></my-search>
 	<view class="scroll-view-container">
 		<!-- 左侧的滚动视图区域 -->
 		<scroll-view class="left-scroll-view" scroll-y :style="{height: wh + 'px'}">
@@ -52,7 +59,8 @@
 				<view class="cate-lv2-title">/ {{item2.cat_name}} /</view>
 				<!-- 三级区域 -->
 				<view class="cate-lv3-list">
-					<view class="cate-lv3-item" v-for="(item3, index3) in item2.children" :key="index3" @click="gotoGoodsList(item3)">
+					<view class="cate-lv3-item" v-for="(item3, index3) in item2.children" :key="index3"
+						@click="gotoGoodsList(item3)">
 						<!-- 图片 -->
 						<image :src="item3.cat_icon"></image>
 						<!-- 文本 -->
