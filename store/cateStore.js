@@ -14,10 +14,8 @@ export const useCateStore = defineStore('cate', () => {
 
 	const getCateList = async () => {
 		const res = await cateListAPI()
-		console.log(res.message);
 		cateList.value = res.message
 		cateLevel2.value = res.message.map(item => item.children)
-		console.log(cateLevel2.value);
 	}
 
 	return {

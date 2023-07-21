@@ -35,7 +35,6 @@ export const useHomeStore = defineStore('home', () => {
 					'?')[1]
 			})
 		})
-		console.log(res.message);
 		floorList.value = res.message;
 	}
 
