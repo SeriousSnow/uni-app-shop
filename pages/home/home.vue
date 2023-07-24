@@ -3,11 +3,24 @@
 		ref
 	} from 'vue'
 	import {
-		onLoad
+		onLoad,
+		onShow
 	} from '@dcloudio/uni-app'
 	import {
 		useHomeStore
 	} from '@/store/homeStore.js'
+
+	// 显示够无车角标
+	import {
+		useSetBadge
+	} from '@/composables/useSetBadge.js'
+	const {
+		setBadge
+	} = useSetBadge()
+	onShow(() => {
+		setBadge()
+	})
+
 
 	const home = useHomeStore();
 

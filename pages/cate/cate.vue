@@ -3,11 +3,23 @@
 		ref
 	} from "vue"
 	import {
-		onLoad
+		onLoad,
+		onShow
 	} from '@dcloudio/uni-app'
 	import {
 		useCateStore
 	} from '@/store/cateStore.js'
+	
+	// 显示够无车角标
+	import {
+		useSetBadge
+	} from '@/composables/useSetBadge.js'
+	const {
+		setBadge
+	} = useSetBadge()
+	onShow(() => {
+		setBadge()
+	})
 
 	const cate = useCateStore()
 	const wh = ref(0)

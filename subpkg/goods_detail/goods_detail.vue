@@ -6,11 +6,16 @@
 		onLoad
 	} from '@dcloudio/uni-app'
 	import {
-		reactive
+		computed,
+		reactive,
+		watch
 	} from "vue";
-
+	import {
+		useCartStore
+	} from '@/store/cartStore.js'
 
 	const detail = useDetailStore()
+	const cart = useCartStore()
 	const data = reactive({
 		// 左侧按钮组的配置对象
 		options: [{
@@ -19,7 +24,7 @@
 		}, {
 			icon: 'cart',
 			text: '购物车',
-			info: 2
+			info: cart.total
 		}],
 		// 右侧按钮组的配置对象
 		buttonGroup: [{
@@ -58,6 +63,36 @@
 			})
 		}
 	}
+
+	// 右侧按钮的点击事件处理函数
+	const buttonClick = (e) => {
+		// 1. 判断是否点击了 加入购物车 按钮
+		if (e.content.text === '加入购物车') {
+
+			// 2. 组织一个商品的信息对象
+			const goods = {
+				goods_id: detail.data.goods_info.goods_id, // 商品的Id
+				goods_name: detail.data.goods_info.goods_name, // 商品的名称
+				goods_price: detail.data.goods_info.goods_price, // 商品的价格
+				goods_count: 1, // 商品的数量
+				goods_small_logo: detail.data.goods_info.goods_small_logo, // 商品的图片
+				goods_state: true // 商品的勾选状态
+			}
+			// 3. 通过 this 调用映射过来的 addToCart 方法，把商品信息对象存储到购物车中
+			cart.addToCart(goods)
+		}
+	}
+
+	const total = computed(() => {
+		return cart.total
+	})
+
+	watch(total,(newVal, oldVal) => {
+		const findResult = data.options.find((x) => x.text === '购物车')
+		if (findResult) {
+			findResult.info = newVal
+		}
+	})
 </script>
 
 <template>
